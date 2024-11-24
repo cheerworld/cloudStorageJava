@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
+import com.udacity.jwdnd.course1.cloudstorage.constants.Messages;
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
@@ -27,9 +28,9 @@ public class NoteController {
             Integer userId = userService.getUser(username).getUserId();
             note.setUserId(userId);
             noteService.saveOrUpdate(note);
-            redirectAttributes.addFlashAttribute("successMessage", "Note saved successfully!");
+            redirectAttributes.addFlashAttribute("successMessage", Messages.SAVE_NOTE_SUCCESS);
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while saving the note. Please try again.");
+            redirectAttributes.addFlashAttribute("errorMessage", Messages.SAVE_NOTE_ERROR);
         }
         return "redirect:/home/result";
     }
@@ -38,9 +39,9 @@ public class NoteController {
     public String deleteNote(@PathVariable("id") Integer noteId, RedirectAttributes redirectAttributes) {
         try {
             noteService.delete(noteId);
-            redirectAttributes.addFlashAttribute("successMessage", "Note deleted successfully!");
+            redirectAttributes.addFlashAttribute("successMessage", Messages.DELETE_NOTE_SUCCESS);
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while deleting the note. Please try again.");
+            redirectAttributes.addFlashAttribute("errorMessage", Messages.DELETE_NOTE_ERROR);
         }
         return "redirect:/home/result";
     }

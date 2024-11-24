@@ -1,6 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
 
+import com.udacity.jwdnd.course1.cloudstorage.constants.Messages;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,19 +36,19 @@ public class FileController {
         Integer userId = userService.getUser(username).getUserId();
 
         if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Please select a file to upload.");
+            redirectAttributes.addFlashAttribute("errorMessage", Messages.UPLOAD_FILE_EMPTY_ERROR);
             return "redirect:/home/result";
         }
 
         try {
             if (!fileService.isFilenameAvailable(file.getOriginalFilename(), userId)) {
-                redirectAttributes.addFlashAttribute("errorMessage", "A file with this name already exists.");
+                redirectAttributes.addFlashAttribute("errorMessage", Messages.UPLOAD_SAME_FILE_ERROR);
                 return "redirect:/home/result";
             }
             fileService.saveFile(file, userId);
-            redirectAttributes.addFlashAttribute("successMessage", "File uploaded successfully!");
+            redirectAttributes.addFlashAttribute("successMessage", Messages.UPLOAD_FILE_SUCCESS);
         } catch (IOException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while uploading the file. Please try again.");
+            redirectAttributes.addFlashAttribute("errorMessage", Messages.UPLOAD_FILE_ERROR);
         }
         return "redirect:/home/result";
     }
@@ -63,9 +64,9 @@ public class FileController {
     public String deleteFile(@PathVariable("id") Integer fileId, RedirectAttributes redirectAttributes) {
         try {
             fileService.deleteFile(fileId);
-            redirectAttributes.addFlashAttribute("successMessage", "File deleted successfully!");
+            redirectAttributes.addFlashAttribute("successMessage", Messages.DELETE_FILE_SUCCESS);
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while deleting the file. Please try again.");
+            redirectAttributes.addFlashAttribute("errorMessage", Messages.DELETE_FILE_ERROR);
         }
         return "redirect:/home/result";
     }

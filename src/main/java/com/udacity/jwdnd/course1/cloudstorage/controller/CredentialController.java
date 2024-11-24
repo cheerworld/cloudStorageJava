@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
+import com.udacity.jwdnd.course1.cloudstorage.constants.Messages;
 import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
@@ -30,9 +31,9 @@ public class CredentialController {
 
         try {
             credentialService.saveCredential(credential, userId);
-            redirectAttributes.addFlashAttribute("successMessage", "Credential saved successfully!");
+            redirectAttributes.addFlashAttribute("successMessage", Messages.SAVE_CREDENTIAL_SUCCESS_MSG);
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while saving the credential. Please try again.");
+            redirectAttributes.addFlashAttribute("errorMessage", Messages.SAVE_CREDENTIAL_ERROR_MSG);
         }
         return "redirect:/home/result";
     }
@@ -41,9 +42,9 @@ public class CredentialController {
     public String deleteCredential(@PathVariable("id") Integer credentialId, RedirectAttributes redirectAttributes) {
         try {
             credentialService.deleteCredential(credentialId);
-            redirectAttributes.addFlashAttribute("successMessage", "Credential deleted successfully!");
+            redirectAttributes.addFlashAttribute("successMessage", Messages.DELETE_CREDENTIAL_SUCCESS_MSG);
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while deleting the credential. Please try again.");
+            redirectAttributes.addFlashAttribute("errorMessage", Messages.DELETE_CREDENTIAL_ERROR_MSG);
         }
         return "redirect:/home/result";
     }
